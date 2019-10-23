@@ -1,0 +1,53 @@
+@font-face {
+    font-family: 'marvelregular';
+    src: url("./fonts/marvel-regular-webfont.woff2") format('woff2'),
+         url('./fonts/marvel-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+#top-banner {
+    justify-content: center;
+}
+.row {
+    justify-content: center;
+}
+
+#tagline {
+    font-family: "marvelregular";
+    font-size: 28px;
+    background-color: #880000;
+    color: #a9bae3;
+    padding-left: 147px;
+    padding-right: 171px;
+}
+
+.pics {
+    height: 150px;
+    width: 125px;
+    margin-top: 15px;
+}
+
+#player1choice {
+    background-color: green;
+    color: #eeeeee;
+    margin: 25px;
+}
+
+#victory {
+    background-color: #eeeeee;
+}
+
+#player2choice {
+    background-color: green;
+    color: #eeeeee;
+    margin: 25px;
+}
+
+#chatBox {
+    margin-top: 25px;
+    background-color: red;
+}
+body, 
+#main-background{
+    background-color: #222222;
+}
