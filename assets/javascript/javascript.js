@@ -12,9 +12,13 @@ Thanos snaps Hulk*/
 
 $(document).ready(function(){
     
-    renderButtons();
-
-    function renderButtons() {
+    //gets value from player1's click
+    $(".pics").on("click", function(){
         
-    }
+        var player1input = $(this).data("name");
+        console.log(player1input);
+    });
+
+    
+    
 })

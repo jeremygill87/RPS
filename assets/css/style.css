@@ -21,7 +21,8 @@
     padding-right: 171px;
 }
 
-.pics {
+.pics,
+.hero-image {
     height: 150px;
     width: 125px;
     margin-top: 15px;
