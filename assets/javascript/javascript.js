@@ -15,24 +15,27 @@ $(document).ready(function(){
     var player1wins = 0;
     var player2wins = 0;
     var outcome = "";
-    var computerInput = Math.floor(Math.random()* 5);
-    var player2array = ["hulk", "fantastic", "wolverine", "venom", "thanos"];
 
+
+    /*function player2choose(){
+            var player2input = player2array[computerInput];
+            console.log("player2 is: " + player2input);
+    };*/
+            
+    
     //click function gets value from player1's click choice
     $(".pics").on("click", function(){
+        
         outcome = "";
+        var computerInput = Math.floor(Math.random()* 5);
+        var player2array = ["hulk", "fantastic", "wolverine", "venom", "thanos"];
+
         var player1input = $(this).data("name");
         console.log("player1 is: " + player1input);
-        player2choose();
-    
 
-    
-
-    function player2choose(){
         var player2input = player2array[computerInput];
-        console.log("player2 is: " + player2input)
+        console.log("player2 is: " + player2input);
         matchup();
-    
 
 
     function matchup(){
@@ -135,8 +138,8 @@ $(document).ready(function(){
     $("#player1choice").text("Wins: " + player1wins);
     $("#player2choice").text("Wins: " + player2wins);
     };
-};
+});
 
 
 })
-});
+
