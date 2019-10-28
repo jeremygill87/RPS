@@ -1,11 +1,7 @@
-$(document).ready(function(){
-    
-    var outcome = "";
-
-    const firebaseConfig = {
+    const config = {
         apiKey: "AIzaSyApInFP-qIHAqWkpPjBMqzC7hHfbpl5IfA",
         authDomain: "class-setup-project.firebaseapp.com",
-        databaseURL: "https://class-setup-project.firebaseio.com",
+        databaseURL: "https://class-setup-project.firebaseio.com/",
         projectId: "class-setup-project",
         storageBucket: "class-setup-project.appspot.com",
         messagingSenderId: "587934945128",
@@ -13,15 +9,16 @@ $(document).ready(function(){
         measurementId: "G-4RK2Q7QY2P"
       };
     
-    //intialize the firebase App
-    firebase.initializeApp(firebaseConfig);
+    //initialize the firebase App
+    firebase.initializeApp(config);
 
     //variable to reference the database and chat
     var database = firebase.database();
 
+    var con;
     var player = {
         number: "0",
-        name: "empty",
+        name: "",
         wins: 0,
         input: "",
         connected: false
@@ -39,31 +36,24 @@ $(document).ready(function(){
         opponent: opponent
     });
 
-    getInfo(); 
+    var userID = prompt("Enter your user name");
+    var playerConnectedRef = database.ref("/players/player/connected");
 
-    function getInfo(){
-        var userID = prompt("Please enter your user name");
-        var connectionsRef = database.ref("/connections");
-        var connectedRef = database.ref(".info/connected");
-        var playerRef = database.ref("/players/player");
-        var opponentRef = database.ref("/players/opponent");
-
-        connectedRef.on("value", function (snap){
-
-            if (snap.val()) {
-                var con = connectionsRef.push(true);
-                con.onDisconnect().remove();
-            }
-        });
-    }
-    
-    
-    
-
-    
-
-    
-   
+   playerConnectedRef.once("value", function(snap){
+       console.log(playerConnectedRef);
+       console.log(snap.val());
+       if (snap.val() === false){
+           database.ref("/players/player").update({
+            connected: true,   
+            name: userID
+           })
+       } else if (snap.val() === true){
+           database.ref("/players/opponent").update({
+               connected: true,
+               name: userID
+           })
+       }
+   })
 
     //click function gets value from player1's click choice
     $(".pics").on("click", function(){
@@ -186,6 +176,4 @@ $(document).ready(function(){
     };
 });
 
-
-})
 
