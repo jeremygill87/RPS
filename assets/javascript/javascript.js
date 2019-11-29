@@ -15,45 +15,49 @@
     //variable to reference the database and chat
     var database = firebase.database();
 
+    var userID = prompt("Enter your user name");
+
     var con;
     var player = {
         number: "0",
         name: "",
         wins: 0,
         input: "",
-        connected: false
     };
     var opponent = {
         number: "0",
-        name: "empty",
+        name: "",
         wins: 0,
         input: "",
-        connected: false
     };
+    if (player.name === ""){
+        player.name = userID
+    } else if (player.name !== ""){
+        opponent.name = userID
+    }
+    var connectionsRef = database.ref("/connections/players");
 
-    database.ref("/players").set({
+    database.ref("/connections/players").set({
         player: player,
         opponent: opponent
     });
+    
+//     var playerConnectedRef = database.ref(".info/connected");
 
-    var userID = prompt("Enter your user name");
-    var playerConnectedRef = database.ref("/players/player/connected");
+//    playerConnectedRef.on("value", function(snap){
+//        console.log(playerConnectedRef);
+//        console.log(snap.val());
+//       if (snap.val()) {
+//           con = connectionsRef.push(player);
+//           con.onDisconnect().remove();
+//       }
+//    })
+   
+document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+document.cookie = "username=" + userID + ";";
 
-   playerConnectedRef.once("value", function(snap){
-       console.log(playerConnectedRef);
-       console.log(snap.val());
-       if (snap.val() === false){
-           database.ref("/players/player").update({
-            connected: true,   
-            name: userID
-           })
-       } else if (snap.val() === true){
-           database.ref("/players/opponent").update({
-               connected: true,
-               name: userID
-           })
-       }
-   })
+var cookieName = Cookies.get("username");
+console.log(cookieName);
 
     //click function gets value from player1's click choice
     $(".pics").on("click", function(){
@@ -65,7 +69,6 @@
         database.ref("/players/player/input").push({
             Player: player.input
         })
-
         opponent.input = $(this).data("name");
         console.log("player2 is: " + opponent.input);
         database.ref("/players/opponent/input").push({
@@ -175,5 +178,3 @@
     $("#player2choice").text("Wins: " + opponent.wins);
     };
 });
-
-
