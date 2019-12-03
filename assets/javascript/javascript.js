@@ -30,29 +30,32 @@
         wins: 0,
         input: "",
     };
-    if (player.name === ""){
-        player.name = userID
-    } else if (player.name !== ""){
-        opponent.name = userID
-    }
+
     var connectionsRef = database.ref("/connections/players");
 
     database.ref("/connections/players").set({
         player: player,
         opponent: opponent
     });
-    
-//     var playerConnectedRef = database.ref(".info/connected");
 
-//    playerConnectedRef.on("value", function(snap){
-//        console.log(playerConnectedRef);
-//        console.log(snap.val());
-//       if (snap.val()) {
-//           con = connectionsRef.push(player);
-//           con.onDisconnect().remove();
-//       }
-//    })
+    var playerConnectedRef = database.ref(".info/connected");
+
+   playerConnectedRef.on("value", function(snap){
+       console.log(playerConnectedRef);
+       console.log(snap.val());
+      if (snap.val()) {
+          con = connectionsRef.push(player);
+          con.onDisconnect().remove();
+      }
+   })
    
+/* Pseudo-code
+Upon username submission, run a check to see if the "Player" spot is already occupied in Firebase
+If that space is NOT empty, then push username and values into the "opponent" spot
+For the life of me, I can not figure out how to run this check, though I know how to push the values into the database
+However, they keep pushing into both "player" and "opponent"
+*/
+
 document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
 document.cookie = "username=" + userID + ";";
 
