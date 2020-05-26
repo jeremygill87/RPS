@@ -1,183 +1,155 @@
-    const config = {
-        apiKey: "AIzaSyApInFP-qIHAqWkpPjBMqzC7hHfbpl5IfA",
-        authDomain: "class-setup-project.firebaseapp.com",
-        databaseURL: "https://class-setup-project.firebaseio.com/",
-        projectId: "class-setup-project",
-        storageBucket: "class-setup-project.appspot.com",
-        messagingSenderId: "587934945128",
-        appId: "1:587934945128:web:366115143017d5fef590dd",
-        measurementId: "G-4RK2Q7QY2P"
-      };
-    
-    //initialize the firebase App
-    firebase.initializeApp(config);
+// var player = {
+//     number: "0",
+//     name: "",
+//     wins: 0,
+//     input: "",
+// };
+// var opponent = {
+//     number: "0",
+//     name: "",
+//     wins: 0,
+//     input: "",
+// };
 
-    //variable to reference the database and chat
-    var database = firebase.database();
+// //click function gets value from player1's click choice
+// $(".pics").on("click", function () {
 
-    var userID = prompt("Enter your user name");
+//     outcome = "";
 
-    var con;
+//     player.input = $(this).data("name");
+//     console.log("player is: " + player.input);
+//     database.ref("/players/player/input").push({
+//         Player: player.input
+//     })
+//     opponent.input = $(this).data("name");
+//     console.log("player2 is: " + opponent.input);
+//     database.ref("/players/opponent/input").push({
+//         Opponent: opponent.input
+//     })
+//     matchup();
+$(document).ready(function() {
+
     var player = {
-        number: "0",
-        name: "",
         wins: 0,
         input: "",
     };
-    var opponent = {
-        number: "0",
-        name: "",
+    var computer = {
         wins: 0,
         input: "",
+        array: ["hulk","fantastic","wolverine","venom","thanos"]
     };
-
-    var connectionsRef = database.ref("/connections/players");
-
-    database.ref("/connections/players").set({
-        player: player,
-        opponent: opponent
-    });
-
-    var playerConnectedRef = database.ref(".info/connected");
-
-   playerConnectedRef.on("value", function(snap){
-       console.log(playerConnectedRef);
-       console.log(snap.val());
-      if (snap.val()) {
-          con = connectionsRef.push(player);
-          con.onDisconnect().remove();
-      }
-   })
-   
-/* Pseudo-code
-Upon username submission, run a check to see if the "Player" spot is already occupied in Firebase
-If that space is NOT empty, then push username and values into the "opponent" spot
-For the life of me, I can not figure out how to run this check, though I know how to push the values into the database
-However, they keep pushing into both "player" and "opponent"
-*/
-
-document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-document.cookie = "username=" + userID + ";";
-
-var cookieName = Cookies.get("username");
-console.log(cookieName);
-
-    //click function gets value from player1's click choice
-    $(".pics").on("click", function(){
-
+    
+    // click function gets value from player1's click choice
+    $(".pics").on("click", function() {
         outcome = "";
+        var computerrandom = Math.floor(Math.random() * 5)
 
         player.input = $(this).data("name");
-        console.log("player is: " + player.input);
-        database.ref("/players/player/input").push({
-            Player: player.input
-        })
-        opponent.input = $(this).data("name");
-        console.log("player2 is: " + opponent.input);
-        database.ref("/players/opponent/input").push({
-            Opponent: opponent.input
-        })
+        console.log("player chose: " + player.input);
+
+        computer.input = computer.array[computerrandom];
+        console.log("computer chose: " + computer.input);
+        
         matchup();
+    })
 
-
-    function matchup(){
+    function matchup() {
         //runs through the logic
-        if (player.input === opponent.input){
+        if (player.input === computer.input) {
             outcome = "The battle is a draw.";
         }
-        else if (player.input === "hulk")
-        {
-            if (opponent.input === "fantastic") {
+        else if (player.input === "hulk") {
+            if (computer.input === "fantastic") {
                 outcome = "Mr. Fantastic binds Hulk";
-                opponent.wins++;
+                computer.wins++;
             }
-            if (opponent.input === "wolverine"){
+            if (computer.input === "wolverine") {
                 outcome = "Hulk smashes Wolverine";
-                player1.wins++;
+                player.wins++;
             }
-            if (player2.input === "venom"){
+            if (computer.input === "venom") {
                 outcome = "Hulk is immune to Venom's symbiote";
                 player.wins++;
             }
-            if (opponent.input === "thanos"){
+            if (computer.input === "thanos") {
                 outcome = "Thanos snaps Hulk out of existence";
-                opponent.wins++;
+                computer.wins++;
             }
         }
-        else if (player.input === "fantastic"){
-            if (opponent.input === "hulk"){
+        else if (player.input === "fantastic") {
+            if (computer.input === "hulk") {
                 outcome = "Mr. Fantastic binds Hulk";
                 player.wins++;
             }
-            if(opponent.input === "wolverine"){
+            if (computer.input === "wolverine") {
                 outcome = "Wolverine impales Mr. Fantastic";
-                opponent.wins++;
+                computer.wins++;
             }
-            if(opponent.input === "venom"){
+            if (computer.input === "venom") {
                 outcome = "Venom eats Mr. Fantastic";
-                opponent.wins++;
+                computer.wins++;
             }
-            if(opponent.input === "thanos"){
+            if (computer.input === "thanos") {
                 outcome = "Mr. Fantastic scientifically disproves the existence of Thanos.";
                 player.wins++;
             }
         }
-        else if (player.input === "wolverine"){
-            if (opponent.input === "hulk"){
+        else if (player.input === "wolverine") {
+            if (computer.input === "hulk") {
                 outcome = "Hulk smashes Wolverine";
-                opponent.wins++;
+                computer.wins++;
             }
-            if (opponent.input === "fantastic"){
+            if (computer.input === "fantastic") {
                 outcome = "Wolverine impales Mr. Fantastic";
                 player.wins++;
             }
-            if (opponent.input === "venom"){
+            if (computer.input === "venom") {
                 outcome = "Wolverine slashes Venom";
                 player.wins++;
             }
-            if (opponent.input === "thanos"){
+            if (computer.input === "thanos") {
                 outcome = "Thanos crushes Wolverine";
-                opponent.wins++;
+                computer.wins++;
             }
         }
-        else if (player.input === "venom"){
-            if (opponent.input === "hulk"){
+        else if (player.input === "venom") {
+            if (computer.input === "hulk") {
                 outcome = "Hulk is immune to Venom's symbiote";
-                opponent.wins++;
+                computer.wins++;
             }
-            if (opponent.input === "fantastic"){
+            if (computer.input === "fantastic") {
                 outcome = "Venom eats Mr. Fantastic";
                 player.wins++;
             }
-            if (opponent.input === "wolverine"){
+            if (computer.input === "wolverine") {
                 outcome = "Wolverine slashes Venom";
-                opponent.wins++;
+                computer.wins++;
             }
-            if (opponent.input === "thanos"){
+            if (computer.input === "thanos") {
                 outcome = "Venom poisons Thanos";
                 player.wins++;
             }
         }
-        else if (player.input === "thanos"){
-            if (opponent.input === "hulk"){
+        else if (player.input === "thanos") {
+            if (computer.input === "hulk") {
                 outcome = "Thanos snaps Hulk out of existence";
                 player.wins++;
             }
-            if (opponent.input === "fantastic"){
+            if (computer.input === "fantastic") {
                 outcome = "Mr. Fantastic scientifically disproves the existence of Thanos";
-                opponent.wins++;
+                computer.wins++;
             }
-            if (opponent.input === "wolverine"){
+            if (computer.input === "wolverine") {
                 outcome = "Thanos crushes Wolverine";
                 player.wins++;
             }
-            if (opponent.input === "venom"){
+            if (computer.input === "venom") {
                 outcome = "Venom poisons Thanos";
-                opponent.wins++;
+                computer.wins++;
             }
         };
-    $("#victory").text(outcome);
-    $("#player1choice").text("Wins: " + player.wins);
-    $("#player2choice").text("Wins: " + opponent.wins);
+        $("#victory").text(outcome);
+        $("#player1choice").text("Wins: " + player.wins);
+        $("#player2choice").text("Wins: " + computer.wins);
     };
 });
