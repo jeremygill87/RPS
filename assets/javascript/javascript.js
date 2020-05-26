@@ -1,32 +1,3 @@
-// var player = {
-//     number: "0",
-//     name: "",
-//     wins: 0,
-//     input: "",
-// };
-// var opponent = {
-//     number: "0",
-//     name: "",
-//     wins: 0,
-//     input: "",
-// };
-
-// //click function gets value from player1's click choice
-// $(".pics").on("click", function () {
-
-//     outcome = "";
-
-//     player.input = $(this).data("name");
-//     console.log("player is: " + player.input);
-//     database.ref("/players/player/input").push({
-//         Player: player.input
-//     })
-//     opponent.input = $(this).data("name");
-//     console.log("player2 is: " + opponent.input);
-//     database.ref("/players/opponent/input").push({
-//         Opponent: opponent.input
-//     })
-//     matchup();
 $(document).ready(function() {
 
     var player = {
